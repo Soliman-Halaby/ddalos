@@ -3,69 +3,70 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ThreeJS</title>
-    <!-- <link rel="stylesheet" type="text/css" href="style.css" /> -->
   </head>
-  
+
   <body>
-	<script src="three.min.js"></script>
-	<script src="GLTFLoader.js"></script>
-	<script src="OrbitControls.js"></script>
-	
-	<script>
-		let scene, camera, renderer;
-		scene = new THREE.Scene();
-		scene.background = new THREE.Color(0xdddddd);
+    <script src="three.min.js"></script>
+    <script src="GLTFLoader.js"></script>
+    <script src="OrbitControls.js"></script>
 
-		camera = new THREE.PerspectiveCamera(
-		40,
-		window.innerWidth / window.innerHeight,
-		1,
-		5000
-		);
-		camera.rotation.y = (45 / 180) * Math.PI;
-		camera.position.x = 100;
-		camera.position.y = 10;
-		camera.position.z = 200;
+    <script>
+      let scene, camera, renderer;
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xdddddd);
 
-		renderer = new THREE.WebGLRenderer({antialias:true});
-		renderer.setSize(window.innerWidth,window.innerHeight);
-		document.body.appendChild(renderer.domElement);
+      camera = new THREE.PerspectiveCamera(
+        40,
+        window.innerWidth / window.innerHeight,
+        1,
+        5000
+      );
+      camera.rotation.y = (45 / 180) * Math.PI;
+      camera.position.x = 100;
+      camera.position.y = 10;
+      camera.position.z = 200;
 
-		controls = new THREE.OrbitControls(camera, renderer.domElement);
-		hlight = new THREE.AmbientLight(0x404040, 100);
-		scene.add(hlight);
+      renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+      renderer.physicallyCorrectLights = true;
+      renderer.outputEncoding = THREE.sRGBEncoding;
 
-		directionalLight = new THREE.DirectionalLight(0xffffff, 100);
-		directionalLight.position.set(0, 1, 0);
-		directionalLight.castShadow = true;
-		scene.add(directionalLight);
+      controls = new THREE.OrbitControls(camera, renderer.domElement);
+      hlight = new THREE.AmbientLight(0x404040, 0.2);
+      scene.add(hlight);
 
-		light = new THREE.PointLight(0xc4c4c4, 10);
-		light.position.set(0, 300, 500);
-		scene.add(light);
+      directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+      directionalLight.position.set(0, 1, 0);
+      directionalLight.castShadow = false;
+      scene.add(directionalLight);
 
-		light = new THREE.PointLight(0xc4c4c4, 10);
-		light.position.set(500, 100, 0);
-		scene.add(light);
+      light = new THREE.PointLight(0xc4c4c4, 10);
+      light.position.set(0, 300, 500);
+      scene.add(light);
 
-		light = new THREE.PointLight(0xc4c4c4, 10);
-		light.position.set(0, 100, -500);
-		scene.add(light);
+      light = new THREE.PointLight(0xc4c4c4, 10);
+      light.position.set(500, 100, 0);
+      scene.add(light);
 
-		light = new THREE.PointLight(0xc4c4c4, 10);
-		light.position.set(-500, 300, 0);
-		scene.add(light);
+      light = new THREE.PointLight(0xc4c4c4, 10);
+      light.position.set(0, 100, -500);
+      scene.add(light);
 
-		let loader = new THREE.GLTFLoader();
-		loader.load('personal.gltf', function(gltf){
-			scene.add(gltf.scene);
-			animate();
-		});
+      light = new THREE.PointLight(0xc4c4c4, 10);
+      light.position.set(-500, 300, 0);
+      scene.add(light);
 
-		function animate() {
-			renderer.render(scene, camera);
-			requestAnimationFrame(animate);
-		}
-	</script>
+      let loader = new THREE.GLTFLoader();
+      loader.load("personal.gltf", function (gltf) {
+        scene.add(gltf.scene);
+        animate();
+      });
+
+      function animate() {
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      }
+    </script>
   </body>
 </html>
