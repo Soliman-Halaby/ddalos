@@ -3,15 +3,62 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ThreeJS</title>
+    <style>
+      #blocker {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+
+      #instructions {
+        width: 100%;
+        height: 100%;
+
+        display: -webkit-box;
+        display: -moz-box;
+        display: box;
+
+        -webkit-box-orient: horizontal;
+        -moz-box-orient: horizontal;
+        box-orient: horizontal;
+
+        -webkit-box-pack: center;
+        -moz-box-pack: center;
+        box-pack: center;
+
+        -webkit-box-align: center;
+        -moz-box-align: center;
+        box-align: center;
+
+        color: #ffffff;
+        text-align: center;
+        font-family: Arial;
+        font-size: 14px;
+        line-height: 24px;
+
+        cursor: pointer;
+      }
+    </style>
   </head>
 
   <body>
+    <div id="blocker">
+      <div id="instructions">
+        <span style="font-size: 36px">Click to play</span>
+        <br /><br />
+        Move: WASD<br />
+        Jump: SPACE<br />
+        Look: MOUSE
+      </div>
+    </div>
+
     <script src="./build/three.min.js"></script>
     <script src="GLTFLoader.js"></script>
     <script>
       let scene, camera, renderer;
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xdddddd);
+      scene.background = new THREE.Color(0000000);
 
       camera = new THREE.PerspectiveCamera(
         40,
@@ -60,13 +107,31 @@
       });
     </script>
     <script type="module">
-      import { FirstPersonControls } from "./FirstPersonControls.js";
+      import { PointerLockControls } from "./PointerLockControls.js";
 
       // controls = new THREE.OrbitControls(camera, renderer.domElement);
-      let controls = new FirstPersonControls(camera, renderer.domElement);
+      let controls = new PointerLockControls(camera, renderer.domElement);
+
+      const blocker = document.getElementById("blocker");
+      const instructions = document.getElementById("instructions");
+
+      instructions.addEventListener("click", function () {
+        controls.lock();
+      });
+
+      controls.addEventListener("lock", function () {
+        instructions.style.display = "none";
+        blocker.style.display = "none";
+      });
+
+      controls.addEventListener("unlock", function () {
+        blocker.style.display = "block";
+        instructions.style.display = "";
+      });
       const clock = new THREE.Clock();
       controls.movementSpeed = 100;
       controls.lookSpeed = 0.05;
+      controls.heigtCoef = 0;
       controls.lookVertical = false;
       controls.constrainVertical = false;
       controls.verticalMin = 1.1;
@@ -75,7 +140,6 @@
       function animate() {
         // renderer.render(scene, camera);
         requestAnimationFrame(animate);
-        controls.update(clock.getDelta());
         renderer.render(scene, camera);
       }
       animate();
