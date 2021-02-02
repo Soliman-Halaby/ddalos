@@ -8,7 +8,6 @@
   <body>
     <script src="./build/three.min.js"></script>
     <script src="GLTFLoader.js"></script>
-
     <script>
       let scene, camera, renderer;
       scene = new THREE.Scene();
@@ -22,7 +21,7 @@
       );
       camera.rotation.y = (45 / 180) * Math.PI;
       camera.position.x = 100;
-      camera.position.y = 10;
+      camera.position.y = -25;
       camera.position.z = 200;
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -58,21 +57,28 @@
       let loader = new THREE.GLTFLoader();
       loader.load("showroom.gltf", function (gltf) {
         scene.add(gltf.scene);
-        animate();
       });
-
-      function animate() {
-        renderer.render(scene, camera);
-        requestAnimationFrame(animate);
-      }
-
     </script>
     <script type="module">
       import { FirstPersonControls } from "./FirstPersonControls.js";
 
-    
       // controls = new THREE.OrbitControls(camera, renderer.domElement);
       let controls = new FirstPersonControls(camera, renderer.domElement);
+      const clock = new THREE.Clock();
+      controls.movementSpeed = 100;
+      controls.lookSpeed = 0.05;
+      controls.lookVertical = false;
+      controls.constrainVertical = false;
+      controls.verticalMin = 1.1;
+      controls.verticalMax = 2.2;
+
+      function animate() {
+        // renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+        controls.update(clock.getDelta());
+        renderer.render(scene, camera);
+      }
+      animate();
     </script>
   </body>
 </html>
