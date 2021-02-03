@@ -21,6 +21,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         color: #ffffff;
         text-align: center;
         font-family: Arial;
@@ -43,8 +44,8 @@
   <body>
     <div class="blocker">
       <div class="instructions">
-        <div data-aos="fade-right"
-              data-aos-offset = "600">
+        <!-- <div data-aos="fade-right"
+              data-aos-offset = "600"> -->
           <span style="font-size: 60px"
           >Bienvenue au showroom virtuel <span class="coloredSpan">D'Dalos</span></span
         ></br></br></br>
@@ -53,15 +54,15 @@
         Déplacement : Touches ZQSD<br />
         Vision : Souris<br/>
           <img class="logoImg" src="./logoddalos.png" alt="Logo D'Dalos">
-        </div>
+        <!-- </div> -->
       </div>
     </div>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
     <script src="build/three.min.js"></script>
     <script src="GLTFLoader.js"></script>
     <script>
-        AOS.init();
+        // AOS.init();
       let scene, camera, renderer;
       let moveForward = false;
       let moveBackward = false;
