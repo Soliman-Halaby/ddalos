@@ -21,7 +21,6 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
         color: #ffffff;
         text-align: center;
         font-family: Arial;
@@ -30,7 +29,6 @@
         cursor: pointer;
       }
 
-
       .logoImg{
         display: inline-block;
       }
@@ -38,14 +36,23 @@
       .coloredSpan{
         color: skyblue
       }
+
+      .audioImg{
+        position: absolute;
+        transform: scale(0.2);
+        top: -170;
+        left: -180;
+        cursor: pointer;
+      }
     </style>
   </head>
 
   <body>
     <div class="blocker">
       <div class="instructions">
-        <!-- <div data-aos="fade-right"
-              data-aos-offset = "600"> -->
+        <img class="audioImg" src="./audioOff.png" alt="No audio Image">
+        <div data-aos="fade-right"
+              data-aos-offset = "600">
           <span style="font-size: 60px"
           >Bienvenue au showroom virtuel <span class="coloredSpan">D'Dalos</span></span
         ></br></br></br>
@@ -54,15 +61,15 @@
         Déplacement : Touches ZQSD<br />
         Vision : Souris<br/>
           <img class="logoImg" src="./logoddalos.png" alt="Logo D'Dalos">
-        <!-- </div> -->
+        </div>
       </div>
     </div>
-
-    <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
+    <audio class="showroomAudio" src="./showroomAudio.mp3"></audio>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="build/three.min.js"></script>
     <script src="GLTFLoader.js"></script>
     <script>
-        // AOS.init();
+        AOS.init();
       let scene, camera, renderer;
       let moveForward = false;
       let moveBackward = false;
@@ -102,21 +109,21 @@
       directionalLight.castShadow = false;
       scene.add(directionalLight);
 
-      light = new THREE.PointLight(0xc4c4c4, 10);
-      light.position.set(0, 300, 500);
-      scene.add(light);
+      // light = new THREE.PointLight(0xc4c4c4, 10);
+      // light.position.set(0, 300, 500);
+      // scene.add(light);
 
-      light = new THREE.PointLight(0xc4c4c4, 10);
-      light.position.set(500, 100, 0);
-      scene.add(light);
+      // light = new THREE.PointLight(0xc4c4c4, 10);
+      // light.position.set(500, 100, 0);
+      // scene.add(light);
 
-      light = new THREE.PointLight(0xc4c4c4, 10);
-      light.position.set(0, 100, -500);
-      scene.add(light);
+      // light = new THREE.PointLight(0xc4c4c4, 10);
+      // light.position.set(0, 100, -500);
+      // scene.add(light);
 
-      light = new THREE.PointLight(0xc4c4c4, 10);
-      light.position.set(-500, 300, 0);
-      scene.add(light);
+      // light = new THREE.PointLight(0xc4c4c4, 10);
+      // light.position.set(-500, 300, 0);
+      // scene.add(light);
 
       let loader = new THREE.GLTFLoader();
       loader.load("showroom.gltf", function (gltf) {
@@ -131,7 +138,7 @@
 
       const blocker = document.querySelector(".blocker");
       const instructions = document.querySelector(".instructions");
-
+      const showroomAudio = document.querySelector(".showroomAudio")
       instructions.addEventListener("click", function () {
         controls.lock();
       });
@@ -146,12 +153,36 @@
         instructions.style.display = "";
       });
 
+      const audioPlayer = document.querySelector('.audioImg')
+      let isAudio = false;
+      let playAudio = false;
+      const setAudio = function (event) {
+        if (!isAudio && !playAudio){
+          isAudio = !isAudio
+          playAudio = !playAudio
+          showroomAudio.play();
+          audioPlayer.setAttribute("src", "audioOn.png");
+        }
+        else if(isAudio && playAudio){
+          isAudio = !isAudio
+          playAudio = !playAudio
+          audioPlayer.setAttribute("src", "audioOff.png");
+          showroomAudio.pause();
+        }
+  
+      }
+      audioPlayer.addEventListener("click", setAudio);
+
       scene.add(controls.getObject());
       const onKeyDown = function (event) {
         switch (event.code) {
           case "ArrowUp":
           case "KeyW":
             moveForward = true;
+            console.log(camera.position.x)
+            if (camera.position.x >= 200) {
+        console.log('coucou')
+      }
             break;
 
           case "ArrowLeft":
