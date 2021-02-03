@@ -2,6 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <title>ThreeJS</title>
     <style>
       #blocker {
@@ -46,28 +47,35 @@
       .logoImg{
         display: inline-block;
       }
+      
+      .coloredSpan{
+        color: skyblue
+      }
     </style>
   </head>
 
   <body>
     <div id="blocker">
       <div id="instructions">
-        <span style="font-size: 60px"
-          >Bienvenue au showroom virtuel D'Dalos</span
+        <div data-aos="fade-right"
+              data-aos-offset = "600">
+          <span style="font-size: 60px"
+          >Bienvenue au showroom virtuel <span class="coloredSpan">D'Dalos</span></span
         ></br></br></br>
         <span style="font-size: 36px">Appuyez pour commencer la visite</span>
         <br /><br />
-        Move: WASD<br />
-        Look: MOUSE<br/>
+        Déplacement : Touches ZQSD<br />
+        Vision : Souris<br/>
           <img class="logoImg" src="./logoddalos.png" alt="Logo D'Dalos">
+        </div>
       </div>
     </div>
 
-
-
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="build/three.min.js"></script>
     <script src="GLTFLoader.js"></script>
     <script>
+        AOS.init();
       let scene, camera, renderer;
       let moveForward = false;
       let moveBackward = false;
@@ -89,7 +97,7 @@
         5000
       );
       camera.rotation.y = (45 / 180) * Math.PI;
-      camera.position.x = 100;
+      camera.position.x = -20;
       camera.position.y = -25;
       camera.position.z = 200;
 
