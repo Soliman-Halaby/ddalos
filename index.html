@@ -2,74 +2,80 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <title>ThreeJS</title>
     <style>
-      #blocker {
+      .blocker {
         position: absolute;
         width: 100%;
         height: 100%;
         background-color: rgba(0, 0, 0, 0.5);
       }
-
-      #instructions {
+      body{
+        margin: 0;
+      }
+      .instructions {
         width: 100%;
         height: 100%;
-
-        display: -webkit-box;
-        display: -moz-box;
-        display: box;
-
-        -webkit-box-orient: horizontal;
-        -moz-box-orient: horizontal;
-        box-orient: horizontal;
-
-        -webkit-box-pack: center;
-        -moz-box-pack: center;
-        box-pack: center;
-
-        -webkit-box-align: center;
-        -moz-box-align: center;
-        box-align: center;
-
+        margin :0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
         color: #ffffff;
         text-align: center;
         font-family: Arial;
         font-size: 14px;
         line-height: 24px;
-
         cursor: pointer;
+      }
+
+
+      .logoImg{
+        display: inline-block;
+      }
+      
+      .coloredSpan{
+        color: skyblue
       }
     </style>
   </head>
 
   <body>
-    <div id="blocker">
-      <div id="instructions">
-        <span style="font-size: 36px">Click to play</span>
+    <div class="blocker">
+      <div class="instructions">
+        <!-- <div data-aos="fade-right"
+              data-aos-offset = "600"> -->
+          <span style="font-size: 60px"
+          >Bienvenue au showroom virtuel <span class="coloredSpan">D'Dalos</span></span
+        ></br></br></br>
+        <span style="font-size: 36px">Appuyez pour commencer la visite</span>
         <br /><br />
-        Move: WASD<br />
-        Jump: SPACE<br />
-        Look: MOUSE
+        Déplacement : Touches ZQSD<br />
+        Vision : Souris<br/>
+          <img class="logoImg" src="./logoddalos.png" alt="Logo D'Dalos">
+        <!-- </div> -->
       </div>
     </div>
 
-    <script src="./build/three.min.js"></script>
+    <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
+    <script src="build/three.min.js"></script>
     <script src="GLTFLoader.js"></script>
     <script>
+        // AOS.init();
       let scene, camera, renderer;
       let moveForward = false;
-			let moveBackward = false;
-			let moveLeft = false;
-			let moveRight = false;
-			let canJump = false;
+      let moveBackward = false;
+      let moveLeft = false;
+      let moveRight = false;
+      let canJump = false;
 
-			let prevTime = performance.now();
-			const velocity = new THREE.Vector3();
-			const direction = new THREE.Vector3();
-      const vertex = new THREE.Vector3();
-      
+      let prevTime = performance.now();
+      const velocity = new THREE.Vector3();
+      const direction = new THREE.Vector3();
+
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0000000);
+      scene.background = new THREE.Color('grey');
 
       camera = new THREE.PerspectiveCamera(
         75,
@@ -78,7 +84,7 @@
         5000
       );
       camera.rotation.y = (45 / 180) * Math.PI;
-      camera.position.x = 100;
+      camera.position.x = -20;
       camera.position.y = -25;
       camera.position.z = 200;
 
@@ -123,8 +129,8 @@
       // controls = new THREE.OrbitControls(camera, renderer.domElement);
       let controls = new PointerLockControls(camera, renderer.domElement);
 
-      const blocker = document.getElementById("blocker");
-      const instructions = document.getElementById("instructions");
+      const blocker = document.querySelector(".blocker");
+      const instructions = document.querySelector(".instructions");
 
       instructions.addEventListener("click", function () {
         controls.lock();
@@ -140,70 +146,62 @@
         instructions.style.display = "";
       });
 
-      scene.add( controls.getObject() );
-      const onKeyDown = function ( event ) {
+      scene.add(controls.getObject());
+      const onKeyDown = function (event) {
+        switch (event.code) {
+          case "ArrowUp":
+          case "KeyW":
+            moveForward = true;
+            break;
 
-      switch ( event.code ) {
+          case "ArrowLeft":
+          case "KeyA":
+            moveLeft = true;
+            break;
 
-        case 'ArrowUp':
-        case 'KeyW':
-          moveForward = true;
-          break;
+          case "ArrowDown":
+          case "KeyS":
+            moveBackward = true;
+            break;
 
-        case 'ArrowLeft':
-        case 'KeyA':
-          moveLeft = true;
-          break;
+          case "ArrowRight":
+          case "KeyD":
+            moveRight = true;
+            break;
 
-        case 'ArrowDown':
-        case 'KeyS':
-          moveBackward = true;
-          break;
-
-        case 'ArrowRight':
-        case 'KeyD':
-          moveRight = true;
-          break;
-
-        case 'Space':
-          if ( canJump === true ) velocity.y += 350;
-          canJump = false;
-          break;
-
-      }
-
+          case "Space":
+            if (canJump === true) velocity.y += 350;
+            canJump = false;
+            break;
+        }
       };
 
-      const onKeyUp = function ( event ) {
+      const onKeyUp = function (event) {
+        switch (event.code) {
+          case "ArrowUp":
+          case "KeyW":
+            moveForward = false;
+            break;
 
-      switch ( event.code ) {
+          case "ArrowLeft":
+          case "KeyA":
+            moveLeft = false;
+            break;
 
-        case 'ArrowUp':
-        case 'KeyW':
-          moveForward = false;
-          break;
+          case "ArrowDown":
+          case "KeyS":
+            moveBackward = false;
+            break;
 
-        case 'ArrowLeft':
-        case 'KeyA':
-          moveLeft = false;
-          break;
-
-        case 'ArrowDown':
-        case 'KeyS':
-          moveBackward = false;
-          break;
-
-        case 'ArrowRight':
-        case 'KeyD':
-          moveRight = false;
-          break;
-
-      }
-
+          case "ArrowRight":
+          case "KeyD":
+            moveRight = false;
+            break;
+        }
       };
 
-      document.addEventListener( 'keydown', onKeyDown );
-      document.addEventListener( 'keyup', onKeyUp );
+      document.addEventListener("keydown", onKeyDown);
+      document.addEventListener("keyup", onKeyUp);
       const clock = new THREE.Clock();
       controls.movementSpeed = 100;
       controls.lookSpeed = 0.05;
@@ -219,26 +217,24 @@
         renderer.render(scene, camera);
         const time = performance.now();
 
-        if ( controls.isLocked === true ) {
+        if (controls.isLocked === true) {
+          const delta = (time - prevTime) / 1000;
 
-        const delta = ( time - prevTime ) / 1000;
+          velocity.x -= velocity.x * 10.0 * delta;
+          velocity.z -= velocity.z * 10.0 * delta;
 
-        velocity.x -= velocity.x * 10.0 * delta;
-        velocity.z -= velocity.z * 10.0 * delta;
+          velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 
-        velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+          direction.z = Number(moveForward) - Number(moveBackward);
+          direction.x = Number(moveRight) - Number(moveLeft);
+          direction.normalize(); // this ensures consistent movements in all directions
 
-        direction.z = Number( moveForward ) - Number( moveBackward );
-        direction.x = Number( moveRight ) - Number( moveLeft );
-        direction.normalize(); // this ensures consistent movements in all directions
+          if (moveForward || moveBackward)
+            velocity.z -= direction.z * 400.0 * delta;
+          if (moveLeft || moveRight) velocity.x -= direction.x * 400.0 * delta;
 
-        if ( moveForward || moveBackward ) velocity.z -= direction.z * 400.0 * delta;
-        if ( moveLeft || moveRight ) velocity.x -= direction.x * 400.0 * delta;
-
-
-        controls.moveRight( - velocity.x * delta );
-        controls.moveForward( - velocity.z * delta );
-
+          controls.moveRight(-velocity.x * delta);
+          controls.moveForward(-velocity.z * delta);
         }
 
         prevTime = time;
