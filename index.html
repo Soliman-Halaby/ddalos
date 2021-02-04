@@ -91,9 +91,9 @@
         5000
       );
       camera.rotation.y = (45 / 180) * Math.PI;
-      camera.position.x = -20;
+      camera.position.x = 117;
       camera.position.y = -25;
-      camera.position.z = 200;
+      camera.position.z = 462;
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -179,6 +179,9 @@
         switch (event.code) {
           case "ArrowUp":
           case "KeyW":
+          console.log(camera.position.x)
+          console.log(camera.position.y)
+          console.log(camera.position.z)
             moveForward = true;
             break;
 
