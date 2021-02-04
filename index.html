@@ -2,8 +2,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
+<link rel="manifest" href="./favicon/site.webmanifest">
+<link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="msapplication-TileColor" content="#da532c">
+<meta name="theme-color" content="#ffffff">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <title>ThreeJS</title>
+    <title>D'Dalos Showroom</title>
     <style>
       .blocker {
         position: absolute;
@@ -91,9 +98,9 @@
         5000
       );
       camera.rotation.y = (45 / 180) * Math.PI;
-      camera.position.x = -20;
+      camera.position.x = 117;
       camera.position.y = -25;
-      camera.position.z = 200;
+      camera.position.z = 462;
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -179,6 +186,9 @@
         switch (event.code) {
           case "ArrowUp":
           case "KeyW":
+          console.log(camera.position.x)
+          console.log(camera.position.y)
+          console.log(camera.position.z)
             moveForward = true;
             break;
 
