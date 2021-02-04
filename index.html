@@ -149,9 +149,14 @@
       directionalLight = new THREE.DirectionalLight(0xffffff, 3);
       directionalLight.position.set(3, 1, 0);
       directionalLight.castShadow = true;
-      // Adding lights on the scene
       scene.add(directionalLight);
 
+      directionalLight = new THREE.DirectionalLight(0xffffff, 2);
+      directionalLight.position.set(2, 5, 2);
+      directionalLight.castShadow = true;
+      scene.add(directionalLight);
+
+      // Adding lights on the scene
       directionalLight = new THREE.DirectionalLight(0xffffff, 3);
       directionalLight.position.set(-3, 1, 0);
       directionalLight.castShadow = true;
