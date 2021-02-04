@@ -116,15 +116,20 @@
       const velocity = new THREE.Vector3();
       const direction = new THREE.Vector3();
 
+      // Creating our scene
       scene = new THREE.Scene();
+      // Color of the scene
       scene.background = new THREE.Color(000000);
 
+      // Creating a camera
       camera = new THREE.PerspectiveCamera(
         75,
         window.innerWidth / window.innerHeight,
         1,
         5000
       );
+
+      // Creating different position of the camera  
       camera.rotation.y = (5 / 180) * Math.PI;
       camera.position.x = 222;
       camera.position.y = -25;
@@ -135,12 +140,20 @@
       document.body.appendChild(renderer.domElement);
       renderer.physicallyCorrectLights = true;
       renderer.outputEncoding = THREE.sRGBEncoding;
-
+      
+      // Adding ambient lights
       hlight = new THREE.AmbientLight(0x404040, 5);
       scene.add(hlight);
 
-      directionalLight = new THREE.DirectionalLight(0xffffff, 6);
-      directionalLight.position.set(0, 1, 0);
+      // Adding directional light
+      directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+      directionalLight.position.set(3, 1, 0);
+      directionalLight.castShadow = true;
+      // Adding lights on the scene
+      scene.add(directionalLight);
+
+      directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+      directionalLight.position.set(-3, 1, 0);
       directionalLight.castShadow = true;
       scene.add(directionalLight);
 
