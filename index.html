@@ -3,17 +3,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="apple-touch-icon" sizes="180x180" href="./favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
-  <link rel="manifest" href="./favicon/site.webmanifest">
-  <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
-  <meta name="msapplication-TileColor" content="#da532c">
-  <meta name="theme-color" content="#ffffff">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="./favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./favicon/favicon-16x16.png">
+    <link rel="manifest" href="./favicon/site.webmanifest">
+    <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <title>D'Dalos Showroom</title>
+    <!-- CSS of the page -->
     <style>
-      .blocker {
+      .blocker{
         position: absolute;
         width: 100%;
         height: 100%;
@@ -22,17 +23,14 @@
       body{
         margin: 0;
       }
-      
       .welcomePage{
         font-weight: 600;
         transition: 1s all;
       }
-
       .welcomePage:hover{
         letter-spacing: 3;
         transition: 1s all;
       }
-      
       .bold{
         font-weight: 600;
       }
@@ -56,7 +54,6 @@
         line-height: 24px;
         cursor: pointer;
       }
-
       .logoImg{
         display: inline-block;
         background: #38327018;
@@ -64,11 +61,9 @@
         margin-top: 15px;
         transform: scale(0.7);
       }
-      
       .coloredSpan{
         color: #383270;
       }
-
       .audioImg{
         position: absolute;
         transform: scale(0.2);
@@ -78,9 +73,10 @@
       }
     </style>
   </head>
-
   <body>
+    <!-- Container -->
     <div class="blocker">
+      <!-- Div  that displays different elements -->
       <div class="instructions">
         <img class="audioImg" src="./audioOff.png" alt="No audio Image">
         <div data-aos="fade-right"
@@ -92,38 +88,48 @@
         <br /><br />
         <span class="move">
           <span class="bold coloredSpan">Déplacement :</span> Touches ZQSD<br />
-          <span class="bold coloredSpan">Vision :</span> Souris<br/>
+          <span class="bold coloredSpan">Vision :</span>Souris<br/>
         </span>
           <img class="logoImg" src="./logoddalos.png" alt="Logo D'Dalos">
         </div>
       </div>
     </div>
+    <!-- Adding an audio -->
     <audio class="showroomAudio" src="./showroomAudio.mp3"></audio>
+    <!-- Adding AOS library -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- Importing different three JS file and gltf loader -->
     <script src="build/three.min.js"></script>
     <script src="GLTFLoader.js"></script>
     <script>
+      // Calling AOS library
         AOS.init();
+
+      // Creating different elements and boolean
       let scene, camera, renderer;
       let moveForward = false;
       let moveBackward = false;
       let moveLeft = false;
       let moveRight = false;
-      let canJump = false;
 
       let prevTime = performance.now();
       const velocity = new THREE.Vector3();
       const direction = new THREE.Vector3();
 
+      // Creating our scene
       scene = new THREE.Scene();
+      // Color of the scene
       scene.background = new THREE.Color(000000);
 
+      // Creating a camera
       camera = new THREE.PerspectiveCamera(
         75,
         window.innerWidth / window.innerHeight,
         1,
         5000
       );
+
+      // Creating different position of the camera  
       camera.rotation.y = (5 / 180) * Math.PI;
       camera.position.x = 222;
       camera.position.y = -25;
@@ -134,12 +140,20 @@
       document.body.appendChild(renderer.domElement);
       renderer.physicallyCorrectLights = true;
       renderer.outputEncoding = THREE.sRGBEncoding;
-
+      
+      // Adding ambient lights
       hlight = new THREE.AmbientLight(0x404040, 5);
       scene.add(hlight);
 
-      directionalLight = new THREE.DirectionalLight(0xffffff, 6);
-      directionalLight.position.set(0, 1, 0);
+      // Adding directional light
+      directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+      directionalLight.position.set(3, 1, 0);
+      directionalLight.castShadow = true;
+      // Adding lights on the scene
+      scene.add(directionalLight);
+
+      directionalLight = new THREE.DirectionalLight(0xffffff, 3);
+      directionalLight.position.set(-3, 1, 0);
       directionalLight.castShadow = true;
       scene.add(directionalLight);
 
@@ -168,29 +182,37 @@
     <script type="module">
       import { PointerLockControls } from "./PointerLockControls.js";
 
-      // controls = new THREE.OrbitControls(camera, renderer.domElement);
+      // Use PointerLock effects in the control
       let controls = new PointerLockControls(camera, renderer.domElement);
 
+      // Taking different HTML elements
       const blocker = document.querySelector(".blocker");
       const instructions = document.querySelector(".instructions");
       const showroomAudio = document.querySelector(".showroomAudio")
+
+      // Event listener that will lock the mouse
       instructions.addEventListener("click", function () {
         controls.lock();
       });
 
+      // Remove HTML elements
       controls.addEventListener("lock", function () {
         instructions.style.display = "none";
         blocker.style.display = "none";
       });
 
+      // If unlock mouse display HTML elements
       controls.addEventListener("unlock", function () {
         blocker.style.display = "block";
         instructions.style.display = "";
       });
 
+      // Selecting audio and some boolean 
       const audioPlayer = document.querySelector('.audioImg')
       let isAudio = false;
       let playAudio = false;
+
+      // Function that play / remove the audio
       const setAudio = function (event) {
         if (!isAudio && !playAudio){
           isAudio = !isAudio
@@ -206,9 +228,13 @@
         }
   
       }
+      // Play / Remove the audio  on click
       audioPlayer.addEventListener("click", setAudio);
 
+      // Adding objects in the scene
       scene.add(controls.getObject());
+
+      // Function on key down, moving forward, left, right or backward
       const onKeyDown = function (event) {
         switch (event.code) {
           case "ArrowUp":
@@ -238,6 +264,7 @@
         }
       };
 
+      // Function that stop moving when key up
       const onKeyUp = function (event) {
         switch (event.code) {
           case "ArrowUp":
@@ -262,8 +289,10 @@
         }
       };
 
+      // Event listener to move or stop moving 
       document.addEventListener("keydown", onKeyDown);
       document.addEventListener("keyup", onKeyUp);
+
       const clock = new THREE.Clock();
       controls.movementSpeed = 200;
       controls.lookSpeed = 0.05;
@@ -272,12 +301,14 @@
       controls.constrainVertical = false;
       controls.verticalMin = 1.1;
       controls.verticalMax = 2.2;
-
+      
+      // Function to animate our camera, movement
       function animate() {
         // renderer.render(scene, camera);
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
         const time = performance.now();
+
 
         if (controls.isLocked === true) {
           const delta = (time - prevTime) / 1000;
