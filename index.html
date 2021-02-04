@@ -9,6 +9,7 @@
   <link rel="mask-icon" href="./favicon/safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <title>D'Dalos Showroom</title>
     <style>
@@ -21,6 +22,26 @@
       body{
         margin: 0;
       }
+      
+      .welcomePage{
+        font-weight: 600;
+        transition: 1s all;
+      }
+
+      .welcomePage:hover{
+        letter-spacing: 3;
+        transition: 1s all;
+      }
+      
+      .bold{
+        font-weight: 600;
+      }
+      .move{
+        font-size: 20px;
+      }
+      .pressStart{
+        font-weight: 600;
+      }
       .instructions {
         width: 100%;
         height: 100%;
@@ -30,7 +51,7 @@
         align-items: center;
         color: #ffffff;
         text-align: center;
-        font-family: Arial;
+        font-family: 'Roboto', sans-serif;
         font-size: 14px;
         line-height: 24px;
         cursor: pointer;
@@ -38,12 +59,14 @@
 
       .logoImg{
         display: inline-block;
-        background: rgba(255, 255, 255, 0.164);
+        background: #38327018;
         border-radius: 10px;
+        margin-top: 15px;
+        transform: scale(0.7);
       }
       
       .coloredSpan{
-        color: skyblue
+        color: #383270;
       }
 
       .audioImg{
@@ -62,13 +85,15 @@
         <img class="audioImg" src="./audioOff.png" alt="No audio Image">
         <div data-aos="fade-right"
               data-aos-offset = "600">
-          <span style="font-size: 60px"
+          <span class="welcomePage" style="font-size: 60px"
           >Bienvenue au showroom virtuel <span class="coloredSpan">D'Dalos</span></span
         ></br></br></br>
-        <span style="font-size: 36px">Appuyez pour commencer la visite</span>
+        <span class="pressStart" style="font-size: 30px">Appuyez pour commencer la visite</span>
         <br /><br />
-        Déplacement : Touches ZQSD<br />
-        Vision : Souris<br/>
+        <span class="move">
+          <span class="bold coloredSpan">Déplacement :</span> Touches ZQSD<br />
+          <span class="bold coloredSpan">Vision :</span> Souris<br/>
+        </span>
           <img class="logoImg" src="./logoddalos.png" alt="Logo D'Dalos">
         </div>
       </div>
@@ -91,7 +116,7 @@
       const direction = new THREE.Vector3();
 
       scene = new THREE.Scene();
-      scene.background = new THREE.Color('grey');
+      scene.background = new THREE.Color(000000);
 
       camera = new THREE.PerspectiveCamera(
         75,
@@ -99,10 +124,10 @@
         1,
         5000
       );
-      camera.rotation.y = (45 / 180) * Math.PI;
-      camera.position.x = 117;
+      camera.rotation.y = (5 / 180) * Math.PI;
+      camera.position.x = 222;
       camera.position.y = -25;
-      camera.position.z = 462;
+      camera.position.z = 479;
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -188,9 +213,6 @@
         switch (event.code) {
           case "ArrowUp":
           case "KeyW":
-          console.log(camera.position.x)
-          console.log(camera.position.y)
-          console.log(camera.position.z)
             moveForward = true;
             break;
 
