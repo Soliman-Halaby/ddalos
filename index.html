@@ -91,7 +91,7 @@
       const direction = new THREE.Vector3();
 
       scene = new THREE.Scene();
-      scene.background = new THREE.Color('grey');
+      scene.background = new THREE.Color(000000);
 
       camera = new THREE.PerspectiveCamera(
         75,
@@ -99,10 +99,10 @@
         1,
         5000
       );
-      camera.rotation.y = (45 / 180) * Math.PI;
-      camera.position.x = 117;
+      camera.rotation.y = (5 / 180) * Math.PI;
+      camera.position.x = 222;
       camera.position.y = -25;
-      camera.position.z = 462;
+      camera.position.z = 479;
 
       renderer = new THREE.WebGLRenderer({ antialias: true });
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -188,6 +188,7 @@
         switch (event.code) {
           case "ArrowUp":
           case "KeyW":
+          console.log(camera.rotation.y)
           console.log(camera.position.x)
           console.log(camera.position.y)
           console.log(camera.position.z)
