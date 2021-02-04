@@ -133,8 +133,9 @@
       camera.position.x = 222;
       camera.position.y = -25;
       camera.position.z = 479;
-
+      
       renderer = new THREE.WebGLRenderer({ antialias: true });
+
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
       renderer.physicallyCorrectLights = true;
@@ -184,7 +185,9 @@
       });
     </script>
     <script type="module">
+      import { GUI } from './dat.gui.module.js';
       import { PointerLockControls } from "./PointerLockControls.js";
+      import { Sky } from "./sky.js"
 
       // Use PointerLock effects in the control
       let controls = new PointerLockControls(camera, renderer.domElement);
@@ -194,6 +197,52 @@
       const instructions = document.querySelector(".instructions");
       const showroomAudio = document.querySelector(".showroomAudio")
 
+      let sky, sun;
+
+			function initSky() {
+
+				// Add Sky
+				sky = new Sky();
+				sky.scale.setScalar( 450000 );
+				scene.add( sky );
+
+				sun = new THREE.Vector3();
+
+				/// GUI
+
+				const effectController = {
+					turbidity: 10,
+					rayleigh: 3,
+					mieCoefficient: 0.005,
+					mieDirectionalG: 0.7,
+					inclination: 0.49, // elevation / inclination
+					azimuth: 0.25, // Facing front,
+					exposure: renderer.toneMappingExposure
+				};
+
+				function guiChanged() {
+
+					const uniforms = sky.material.uniforms;
+					uniforms[ "turbidity" ].value = effectController.turbidity;
+					uniforms[ "rayleigh" ].value = effectController.rayleigh;
+					uniforms[ "mieCoefficient" ].value = effectController.mieCoefficient;
+					uniforms[ "mieDirectionalG" ].value = effectController.mieDirectionalG;
+
+					const theta = Math.PI * ( effectController.inclination - 0.5 );
+					const phi = 2 * Math.PI * ( effectController.azimuth - 0.5 );
+
+					sun.x = Math.cos( phi );
+					sun.y = Math.sin( phi ) * Math.sin( theta );
+					sun.z = Math.sin( phi ) * Math.cos( theta );
+
+					uniforms[ "sunPosition" ].value.copy( sun );
+
+					renderer.toneMappingExposure = effectController.exposure;
+					renderer.render( scene, camera );
+
+          }
+        guiChanged();
+        }
       // Event listener that will lock the mouse
       instructions.addEventListener("click", function () {
         controls.lock();
@@ -336,6 +385,7 @@
 
         prevTime = time;
       }
+      initSky();
       animate();
     </script>
   </body>
