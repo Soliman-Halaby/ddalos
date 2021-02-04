@@ -243,7 +243,7 @@
       document.addEventListener("keydown", onKeyDown);
       document.addEventListener("keyup", onKeyUp);
       const clock = new THREE.Clock();
-      controls.movementSpeed = 100;
+      controls.movementSpeed = 200;
       controls.lookSpeed = 0.05;
       controls.heigtCoef = 0;
       controls.lookVertical = false;
@@ -260,8 +260,8 @@
         if (controls.isLocked === true) {
           const delta = (time - prevTime) / 1000;
 
-          velocity.x -= velocity.x * 10.0 * delta;
-          velocity.z -= velocity.z * 10.0 * delta;
+          velocity.x -= velocity.x * 5.5 * delta;
+          velocity.z -= velocity.z * 5.5 * delta;
 
           velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
 
