@@ -1,0 +1,67 @@
+.blocker {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+body {
+  margin: 0;
+}
+.welcomePage {
+  font-weight: 600;
+  transition: 1s all;
+}
+.welcomePage:hover {
+  letter-spacing: 3;
+  transition: 1s all;
+}
+.bold {
+  font-weight: 600;
+}
+.move {
+  font-size: 20px;
+}
+.pressStart {
+  font-weight: 600;
+}
+.instructions {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  line-height: 24px;
+  cursor: pointer;
+}
+.logoImg {
+  display: inline-block;
+  background: #38327018;
+  border-radius: 10px;
+  margin-top: 15px;
+  transform: scale(0.7);
+  transition: 1s all;
+}
+.coloredSpan {
+  color: #383270;
+}
+.audioImg {
+  position: absolute;
+  transform: scale(0.2);
+  top: -170;
+  left: -180;
+  cursor: pointer;
+  transition: 1s all;
+}
+.logoImg:hover {
+  transform: scale(0.8);
+  transition: 1s all;
+}
+.audioImg:hover {
+  transform: scale(0.3);
+  transition: 1s all;
+}

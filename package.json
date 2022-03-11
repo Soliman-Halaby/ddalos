@@ -5,12 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "browser-sync start --server --files '**/*.css, **/*.js, **/*.html, !node_modules' --directory --port 7777"
+    "dev": "browser-sync start --server --files '**/*.css, **/*.js, **/*.html, !node_modules' --directory --port 7777",
+    "deploy": "vercel --prod"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "browser-sync": "^2.26.14",
-    "three": "^0.125.2"
+    "three": "^0.125.2",
+    "vercel": "^23.1.2"
   }
 }
